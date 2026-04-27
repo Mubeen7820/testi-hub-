@@ -1,0 +1,17 @@
+{
+  "name": "testimonial-automation-tool",
+  "version": "1.0.0",
+  "description": "Monorepo for Testimonial Automation Tool",
+  "scripts": {
+    "dev": "npm run frontend",
+    "dev:all": "start /b npm run frontend & npm run backend",
+    "studio": "cd backend && npx prisma studio",
+    "install:all": "npm install --workspace=frontend && npm install --workspace=backend",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}

@@ -1,0 +1,22 @@
+export const COUNTRIES = [
+  { code: 'US', dialCode: '+1', name: 'United States', length: 10 },
+  { code: 'GB', dialCode: '+44', name: 'United Kingdom', length: 10 },
+  { code: 'IN', dialCode: '+91', name: 'India', length: 10 },
+  { code: 'AU', dialCode: '+61', name: 'Australia', length: 9 },
+  { code: 'CA', dialCode: '+1', name: 'Canada', length: 10 },
+  { code: 'DE', dialCode: '+49', name: 'Germany', length: 11 },
+  { code: 'FR', dialCode: '+33', name: 'France', length: 9 },
+  { code: 'IT', dialCode: '+39', name: 'Italy', length: 10 },
+  { code: 'ES', dialCode: '+34', name: 'Spain', length: 9 },
+  { code: 'BR', dialCode: '+55', name: 'Brazil', length: 11 },
+  { code: 'JP', dialCode: '+81', name: 'Japan', length: 10 },
+  { code: 'CN', dialCode: '+86', name: 'China', length: 11 },
+  { code: 'RU', dialCode: '+7', name: 'Russia', length: 10 },
+  { code: 'ZA', dialCode: '+27', name: 'South Africa', length: 9 },
+  { code: 'MX', dialCode: '+52', name: 'Mexico', length: 10 },
+  { code: 'AE', dialCode: '+971', name: 'United Arab Emirates', length: 9 },
+  { code: 'SG', dialCode: '+65', name: 'Singapore', length: 8 },
+  { code: 'NZ', dialCode: '+64', name: 'New Zealand', length: 9 },
+  { code: 'IE', dialCode: '+353', name: 'Ireland', length: 9 },
+  { code: 'SE', dialCode: '+46', name: 'Sweden', length: 9 }
+].sort((a, b) => a.name.localeCompare(b.name));

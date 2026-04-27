@@ -1,0 +1,4 @@
+/* Removed default Vite styles to allow full-screen layout */
+#root {
+  width: 100%;
+}

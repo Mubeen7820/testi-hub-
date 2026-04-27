@@ -1,0 +1,33 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Node / Build
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+dist-ssr/
+
+# Environment / Secrets
+.env
+**/.env
+*.local
+
+# Scratch / Temp
+backend/scratch/
+scratch/
+.gemini/
+uploads/
+
+# Editor / OS
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
