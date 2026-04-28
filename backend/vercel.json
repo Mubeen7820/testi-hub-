@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "src/index.ts",
-      "use": "@vercel/node"
+  "functions": {
+    "src/index.ts": {
+      "runtime": "@vercel/node",
+      "includeFiles": "prisma/**"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -13,6 +13,10 @@
     },
     {
       "src": "/health",
+      "dest": "src/index.ts"
+    },
+    {
+      "src": "/(.*)",
       "dest": "src/index.ts"
     }
   ]
