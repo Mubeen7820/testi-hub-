@@ -1,23 +1,17 @@
 {
   "version": 2,
-  "functions": {
-    "api/index.ts": {
-      "runtime": "@vercel/node",
-      "includeFiles": "prisma/**"
-    }
-  },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "api/index.ts"
+      "source": "/api/(.*)",
+      "destination": "/api/index"
     },
     {
-      "src": "/health",
-      "dest": "api/index.ts"
+      "source": "/health",
+      "destination": "/api/index"
     },
     {
-      "src": "/(.*)",
-      "dest": "api/index.ts"
+      "source": "/(.*)",
+      "destination": "/api/index"
     }
   ]
 }
