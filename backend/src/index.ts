@@ -44,11 +44,15 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 // Routes
+const router = express.Router();
+router.use('/auth', authRoutes);
+router.use('/ai', aiRoutes);
+router.use('/reminders', reminderRoutes);
+router.use('/testimonials', testimonialRoutes);
 
-app.use('/api/auth', authRoutes);
-app.use('/api/ai', aiRoutes);
-app.use('/api/reminders', reminderRoutes);
-app.use('/api/testimonials', testimonialRoutes);
+// Mount under both /api and root to handle different environments
+app.use('/api', router);
+app.use('/', router);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
