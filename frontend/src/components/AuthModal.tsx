@@ -122,7 +122,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     // Set cookie for mode detection in backend callback
     document.cookie = `auth_mode=${isSignUp ? 'signup' : 'login'}; path=/; max-age=600`;
     
-    const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+    const apiBase = import.meta.env.VITE_API_URL;
     
     if (provider === 'Google') {
       // Sign In: only show account chooser (no consent)
