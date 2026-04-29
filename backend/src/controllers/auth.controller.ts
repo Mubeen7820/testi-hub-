@@ -24,7 +24,7 @@ export const register = async (req: Request, res: Response) => {
 
     const userExists = await prisma.user.findUnique({ where: { email } });
     if (userExists) {
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: 'This email is already registered. Please sign in.',
         error: 'USER_ALREADY_EXISTS'
       });
@@ -52,9 +52,9 @@ export const register = async (req: Request, res: Response) => {
     });
 
     res.status(201).json({
-      user: { 
-        id: user.id, 
-        email: user.email, 
+      user: {
+        id: user.id,
+        email: user.email,
         name: user.name,
         avatar: user.avatar,
         businessName: user.businessName,
@@ -75,25 +75,25 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email: rawEmail, password } = req.body;
     const email = rawEmail?.toLowerCase();
-    
+
     console.log(`[Login] Attempt for email: ${email}`);
 
     const user = await prisma.user.findUnique({ where: { email } });
-    
+
     if (!user) {
       console.log(`[Login] User not found for email: ${email}`);
-      return res.status(401).json({ 
+      return res.status(401).json({
         message: 'Account not found. Please sign up to get started.',
-        error: 'USER_NOT_FOUND' 
+        error: 'USER_NOT_FOUND'
       });
     }
 
     // Check if user exists and was created via Google but has no password
     if (!user.password && (user.provider === 'google' || user.googleId)) {
       console.log(`[Login] Google user with no password: ${email}`);
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'GOOGLE_ACCOUNT_NO_PASSWORD',
-        message: 'This account was created using Google. Please set a password to continue.' 
+        message: 'This account was created using Google. Please set a password to continue.'
       });
     }
 
@@ -125,9 +125,9 @@ export const login = async (req: Request, res: Response) => {
     });
 
     res.json({
-      user: { 
-        id: user.id, 
-        email: user.email, 
+      user: {
+        id: user.id,
+        email: user.email,
         phone: user.phone,
         name: user.name,
         avatar: user.avatar,
@@ -160,7 +160,7 @@ export const setPassword = async (req: Request, res: Response) => {
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    
+
     const updatedUser = await prisma.user.update({
       where: { email },
       data: {
@@ -181,9 +181,9 @@ export const setPassword = async (req: Request, res: Response) => {
 
     res.json({
       message: 'Password set successfully',
-      user: { 
-        id: updatedUser.id, 
-        email: updatedUser.email, 
+      user: {
+        id: updatedUser.id,
+        email: updatedUser.email,
         name: updatedUser.name,
         avatar: updatedUser.avatar,
         businessName: updatedUser.businessName,
@@ -223,7 +223,7 @@ export const refreshToken = async (req: Request, res: Response) => {
     // Single Session Enforcement: Check if refresh token version matches DB version
     if (user.sessionVersion !== decoded.sessionVersion) {
       res.clearCookie('refreshToken');
-      return res.status(401).json({ 
+      return res.status(401).json({
         message: 'Session invalidated. Another login detected.',
         error: 'SESSION_REVOKED'
       });
@@ -252,16 +252,17 @@ export const googleCallback = async (req: Request, res: Response) => {
   try {
     const user = req.user as any;
     const authMode = req.cookies.auth_mode; // Read the mode from frontend
+    const clientUrl = process.env.CLIENT_URL || 'https://testi-hub-frontend.vercel.app';
     if (!user) {
-      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=auth_failed`);
+      return res.redirect(`${clientUrl}/login?error=auth_failed`);
     }
 
     // Smart switching for Google
     if (authMode === 'signup' && !user.isNew) {
-      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_ALREADY_EXISTS`);
+      return res.redirect(`${clientUrl}/login?error=USER_ALREADY_EXISTS`);
     }
     if (authMode === 'login' && user.isNew) {
-      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_NOT_FOUND`);
+      return res.redirect(`${clientUrl}/login?error=USER_NOT_FOUND`);
     }
 
     // Increment session version for Social Login
@@ -279,10 +280,10 @@ export const googleCallback = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.redirect(`https://testi-hub-frontend.vercel.app/login?token=${accessToken}`);
+    res.redirect(`${clientUrl}/login?token=${accessToken}`);
   } catch (error) {
     console.error('Google callback error:', error);
-    res.redirect(`https://testi-hub-frontend.vercel.app/login?error=server_error`);
+    res.redirect(`${clientUrl}/login?error=server_error`);
   }
 };
 
@@ -292,16 +293,17 @@ export const oauthCallback = async (req: Request, res: Response) => {
     const user = req.user as any;
     const authMode = req.cookies.auth_mode;
 
+    const clientUrl = process.env.CLIENT_URL || 'https://testi-hub-frontend.vercel.app';
     if (!user) {
-      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=auth_failed`);
+      return res.redirect(`${clientUrl}/login?error=auth_failed`);
     }
 
     // Smart switching for GitHub/LinkedIn
     if (authMode === 'signup' && !user.isNew) {
-      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_ALREADY_EXISTS`);
+      return res.redirect(`${clientUrl}/login?error=USER_ALREADY_EXISTS`);
     }
     if (authMode === 'login' && user.isNew) {
-      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_NOT_FOUND`);
+      return res.redirect(`${clientUrl}/login?error=USER_NOT_FOUND`);
     }
 
     // Increment session version for Social Login
@@ -319,10 +321,10 @@ export const oauthCallback = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.redirect(`https://testi-hub-frontend.vercel.app/login?token=${accessToken}`);
+    res.redirect(`${clientUrl}/login?token=${accessToken}`);
   } catch (error) {
     console.error('OAuth callback error:', error);
-    res.redirect(`https://testi-hub-frontend.vercel.app/login?error=server_error`);
+    res.redirect(`${clientUrl}/login?error=server_error`);
   }
 };
 
@@ -368,17 +370,17 @@ export const updateProfile = async (req: Request, res: Response) => {
     if (error.code === 'P2002') {
       const target = error.meta?.target || [];
       const field = Array.isArray(target) ? target[0] : 'field';
-      return res.status(400).json({ 
+      return res.status(400).json({
         message: `This ${field} is already linked to another account.`,
         error: 'UNIQUE_CONSTRAINT_FAILED'
       });
     }
 
     console.error('[UpdateProfile] Detailed Error:', error);
-    res.status(500).json({ 
+    res.status(500).json({
       message: 'Failed to update profile',
       error: error.message,
-      code: error.code 
+      code: error.code
     });
   }
 };

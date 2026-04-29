@@ -65,6 +65,16 @@ app.listen(PORT, () => {
   process.exit(1);
 });
 
+// Global Error Handler
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('[Error Handler] Caught Error:', err);
+  res.status(err.status || 500).json({
+    message: err.message || 'Internal Server Error',
+    error: process.env.NODE_ENV === 'development' ? err : undefined,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+});
+
 process.on('exit', (code) => {
   console.log(`Process is about to exit with code: ${code}`);
 });

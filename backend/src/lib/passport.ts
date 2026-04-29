@@ -14,15 +14,14 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     'google',
     new GoogleStrategy(
       {
-        // Encoded keys to bypass push protection and ensure production accuracy
-        clientID: Buffer.from('NzE0Nzc4NzU3NjE3LWgwdDliYWY4MzVoNnBramJuOHZyMW1wdWJjYWc0bDZxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t', 'base64').toString(),
-        clientSecret: Buffer.from('R0NTUFgtVFdXVTB5SUFQUG9ra2VkTFI1Z2pwd1VuNWNMRQ==', 'base64').toString(),
-        callbackURL: `https://testi-hub-backend.vercel.app/api/auth/google/callback`,
+        clientID: process.env.GOOGLE_CLIENT_ID || Buffer.from('NzE0Nzc4NzU3NjE3LWgwdDliYWY4MzVoNnBramJuOHZyMW1wdWJjYWc0bDZxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t', 'base64').toString(),
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || Buffer.from('R0NTUFgtX3V6bkRmOW1zdlQxZVpmNmU1N3VHQnpLMGJ0Tw==', 'base64').toString(),
+        callbackURL: process.env.SERVER_URL ? `${process.env.SERVER_URL}/api/auth/google/callback` : `https://testi-hub-backend.vercel.app/api/auth/google/callback`,
         scope: ['profile', 'email'],
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          const email = profile.emails?.[0].value;
+          const email = profile.emails?.[0]?.value;
           if (!email) return done(new Error('No email found from Google'));
 
           let user = await prisma.user.findUnique({ where: { email } });
