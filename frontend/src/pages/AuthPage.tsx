@@ -11,6 +11,7 @@ import mentorxLogo from '../assets/logo_transparent.png';
 import { PhoneAuthWidget } from '../components/auth/PhoneAuthWidget';
 
 const AuthPage = () => {
+  // Force redeploy - Production Backend: https://testi-hub-backend.vercel.app
   const navigate = useNavigate();
   const location = useLocation();
   const setAuth = useAuthStore((state) => state.setAuth);
