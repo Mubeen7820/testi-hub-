@@ -252,17 +252,16 @@ export const googleCallback = async (req: Request, res: Response) => {
   try {
     const user = req.user as any;
     const authMode = req.cookies.auth_mode; // Read the mode from frontend
-    
     if (!user) {
-      return res.redirect(`${process.env.CLIENT_URL}/login?error=auth_failed`);
+      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=auth_failed`);
     }
 
     // Smart switching for Google
     if (authMode === 'signup' && !user.isNew) {
-      return res.redirect(`${process.env.CLIENT_URL}/login?error=USER_ALREADY_EXISTS`);
+      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_ALREADY_EXISTS`);
     }
     if (authMode === 'login' && user.isNew) {
-      return res.redirect(`${process.env.CLIENT_URL}/login?error=USER_NOT_FOUND`);
+      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_NOT_FOUND`);
     }
 
     // Increment session version for Social Login
@@ -280,10 +279,10 @@ export const googleCallback = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.redirect(`${process.env.CLIENT_URL}/login?token=${accessToken}`);
+    res.redirect(`https://testi-hub-frontend.vercel.app/login?token=${accessToken}`);
   } catch (error) {
     console.error('Google callback error:', error);
-    res.redirect(`${process.env.CLIENT_URL}/login?error=server_error`);
+    res.redirect(`https://testi-hub-frontend.vercel.app/login?error=server_error`);
   }
 };
 
@@ -294,15 +293,15 @@ export const oauthCallback = async (req: Request, res: Response) => {
     const authMode = req.cookies.auth_mode;
 
     if (!user) {
-      return res.redirect(`${process.env.CLIENT_URL}/login?error=auth_failed`);
+      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=auth_failed`);
     }
 
     // Smart switching for GitHub/LinkedIn
     if (authMode === 'signup' && !user.isNew) {
-      return res.redirect(`${process.env.CLIENT_URL}/login?error=USER_ALREADY_EXISTS`);
+      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_ALREADY_EXISTS`);
     }
     if (authMode === 'login' && user.isNew) {
-      return res.redirect(`${process.env.CLIENT_URL}/login?error=USER_NOT_FOUND`);
+      return res.redirect(`https://testi-hub-frontend.vercel.app/login?error=USER_NOT_FOUND`);
     }
 
     // Increment session version for Social Login
@@ -320,10 +319,10 @@ export const oauthCallback = async (req: Request, res: Response) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.redirect(`${process.env.CLIENT_URL}/login?token=${accessToken}`);
+    res.redirect(`https://testi-hub-frontend.vercel.app/login?token=${accessToken}`);
   } catch (error) {
     console.error('OAuth callback error:', error);
-    res.redirect(`${process.env.CLIENT_URL}/login?error=server_error`);
+    res.redirect(`https://testi-hub-frontend.vercel.app/login?error=server_error`);
   }
 };
 
