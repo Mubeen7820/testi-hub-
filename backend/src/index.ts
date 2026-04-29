@@ -54,6 +54,10 @@ router.use('/testimonials', testimonialRoutes);
 app.use('/api', router);
 app.use('/', router);
 
+app.get('/', (req, res) => {
+  res.send('<h1>🚀 Testimonial Hub Backend is Running</h1><p>Visit <a href="/health">/health</a> for status.</p>');
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
