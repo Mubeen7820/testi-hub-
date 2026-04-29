@@ -64,8 +64,8 @@ export const verifyOtp = async (req: Request, res: Response) => {
     });
   }
   // Issue JWT tokens (same as other flows)
-  const accessToken = jwt.sign({ userId: user.id }, process.env.JWT_ACCESS_SECRET!, { expiresIn: '15m' });
-  const refreshToken = jwt.sign({ userId: user.id }, process.env.JWT_REFRESH_SECRET!, { expiresIn: '7d' });
+  const accessToken = jwt.sign({ userId: user.id, sessionVersion: user.sessionVersion }, process.env.JWT_ACCESS_SECRET!, { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ userId: user.id, sessionVersion: user.sessionVersion }, process.env.JWT_REFRESH_SECRET!, { expiresIn: '7d' });
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

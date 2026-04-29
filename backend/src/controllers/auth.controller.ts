@@ -249,10 +249,10 @@ export const getMe = async (req: Request, res: Response) => {
 };
 
 export const googleCallback = async (req: Request, res: Response) => {
+  const clientUrl = process.env.CLIENT_URL || 'https://testi-hub-frontend.vercel.app';
   try {
     const user = req.user as any;
     const authMode = req.cookies.auth_mode; // Read the mode from frontend
-    const clientUrl = process.env.CLIENT_URL || 'https://testi-hub-frontend.vercel.app';
     if (!user) {
       return res.redirect(`${clientUrl}/login?error=auth_failed`);
     }
@@ -289,11 +289,11 @@ export const googleCallback = async (req: Request, res: Response) => {
 
 // Reusable callback for Github & LinkedIn — same smart switching flow
 export const oauthCallback = async (req: Request, res: Response) => {
+  const clientUrl = process.env.CLIENT_URL || 'https://testi-hub-frontend.vercel.app';
   try {
     const user = req.user as any;
     const authMode = req.cookies.auth_mode;
 
-    const clientUrl = process.env.CLIENT_URL || 'https://testi-hub-frontend.vercel.app';
     if (!user) {
       return res.redirect(`${clientUrl}/login?error=auth_failed`);
     }

@@ -33,7 +33,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
                 where: { id: user.id },
                 data: { 
                   googleId: profile.id,
-                  avatar: user.avatar || profile.photos?.[0].value,
+                  avatar: user.avatar || profile.photos?.[0]?.value,
                   provider: user.password ? 'hybrid' : 'google',
                 },
               });
@@ -45,7 +45,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
                 email,
                 name: profile.displayName,
                 googleId: profile.id,
-                avatar: profile.photos?.[0].value,
+                avatar: profile.photos?.[0]?.value,
                 provider: 'google',
               },
             });
