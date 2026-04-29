@@ -122,7 +122,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
     // Set cookie for mode detection in backend callback
     document.cookie = `auth_mode=${isSignUp ? 'signup' : 'login'}; path=/; max-age=600`;
     
-    const apiBase = import.meta.env.VITE_API_URL;
+    const apiBase = 'https://testi-hub-backend.vercel.app/api';
     
     if (provider === 'Google') {
       // Sign In: only show account chooser (no consent)

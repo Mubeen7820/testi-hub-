@@ -190,7 +190,7 @@ const AuthPage = () => {
     // Set a cookie to remember if we are in signup or login mode
     document.cookie = `auth_mode=${isSignUp ? 'signup' : 'login'}; path=/; max-age=600`; // 10 mins
     
-    const apiBase = import.meta.env.VITE_API_URL;
+    const apiBase = 'https://testi-hub-backend.vercel.app/api';
     
     if (provider === 'Google') {
       // Sign In: only show account chooser (no consent)

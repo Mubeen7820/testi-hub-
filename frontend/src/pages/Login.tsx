@@ -60,7 +60,7 @@ const Login: React.FC = () => {
 
   const handleSocialLogin = (provider: string) => {
     if (provider === 'Google') {
-      window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
+      window.location.href = `https://testi-hub-backend.vercel.app/api/auth/google`;
       return;
     }
     
