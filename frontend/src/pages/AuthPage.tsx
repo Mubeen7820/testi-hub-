@@ -238,12 +238,12 @@ const AuthPage = () => {
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <div
             ref={glowRef1}
-            className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#1DA1F2]/30 rounded-full blur-[90px] transition-transform duration-[1200ms] ease-out will-change-transform"
+            className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#1DA1F2]/30 rounded-full blur-[90px] transition-transform [transition-duration:1200ms] ease-out will-change-transform"
             style={{ transform: 'translate(-50%, -50%)' }}
           />
           <div
             ref={glowRef2}
-            className="absolute top-0 left-0 w-[300px] h-[300px] bg-[#3B82F6]/30 rounded-full blur-[60px] transition-transform duration-[600ms] ease-out will-change-transform"
+            className="absolute top-0 left-0 w-[300px] h-[300px] bg-[#3B82F6]/30 rounded-full blur-[60px] transition-transform [transition-duration:600ms] ease-out will-change-transform"
             style={{ transform: 'translate(-50%, -50%)' }}
           />
         </div>
