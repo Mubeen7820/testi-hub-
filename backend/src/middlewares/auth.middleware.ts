@@ -7,13 +7,7 @@ interface JwtPayload {
   sessionVersion: number;
 }
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: any;
-    }
-  }
-}
+
 
 export const protect = async (req: Request, res: Response, next: NextFunction) => {
   let token;
@@ -59,7 +53,7 @@ export const protect = async (req: Request, res: Response, next: NextFunction) =
       });
     }
 
-    req.user = user;
+    (req as any).user = user;
     next();
   } catch (error) {
     console.error(error);
