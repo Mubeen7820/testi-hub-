@@ -16,8 +16,13 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
       {
         clientID: process.env.GOOGLE_CLIENT_ID || Buffer.from('NzE0Nzc4NzU3NjE3LWgwdDliYWY4MzVoNnBramJuOHZyMW1wdWJjYWc0bDZxLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t', 'base64').toString(),
         clientSecret: process.env.GOOGLE_CLIENT_SECRET || Buffer.from('R0NTUFgtX3V6bkRmOW1zdlQxZVpmNmU1N3VHQnpLMGJ0Tw==', 'base64').toString(),
-        callbackURL: process.env.SERVER_URL ? `${process.env.SERVER_URL}/api/auth/google/callback` : `https://testi-hub-backend.vercel.app/api/auth/google/callback`,
+        callbackURL: process.env.SERVER_URL 
+          ? `${process.env.SERVER_URL}/api/auth/google/callback` 
+          : (process.env.VERCEL_URL 
+              ? `https://${process.env.VERCEL_URL}/api/auth/google/callback` 
+              : 'http://localhost:5000/api/auth/google/callback'),
         scope: ['profile', 'email'],
+        proxy: true, // Required for Vercel/proxied environments
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
