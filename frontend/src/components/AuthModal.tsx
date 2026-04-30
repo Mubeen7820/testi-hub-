@@ -86,7 +86,19 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         toast.dismiss(toastId);
         return;
       }
-      const message = errorData?.message || 'Authentication failed';
+
+      if (err.isSilentRefreshError || errorData?.message === 'No refresh token') {
+        toast.dismiss(toastId);
+        return;
+      }
+
+      let message = errorData?.message || 'Authentication failed';
+      if (errorData?.error === 'USER_NOT_FOUND') {
+        message = 'Account does not exist';
+      } else if (err.response?.status === 401 || errorData?.error === 'INVALID_CREDENTIALS') {
+        message = 'Invalid email or password';
+      }
+
       setError(message);
       toast.error(message, { id: toastId });
     } finally {

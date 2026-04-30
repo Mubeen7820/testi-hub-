@@ -86,7 +86,11 @@ if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: `https://testi-hub-backend.vercel.app/api/auth/github/callback`,
+      callbackURL: process.env.SERVER_URL 
+        ? `${process.env.SERVER_URL}/api/auth/github/callback`
+        : (process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}/api/auth/github/callback`
+            : 'http://localhost:5000/api/auth/github/callback'),
       scope: ['user:email'],
     },
     async (accessToken: string, refreshToken: string, profile: any, done: any) => {
@@ -130,7 +134,11 @@ if (process.env.LINKEDIN_CLIENT_ID && process.env.LINKEDIN_CLIENT_SECRET) {
     {
       clientID: process.env.LINKEDIN_CLIENT_ID,
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-      callbackURL: `https://testi-hub-backend.vercel.app/api/auth/linkedin/callback`,
+      callbackURL: process.env.SERVER_URL 
+        ? `${process.env.SERVER_URL}/api/auth/linkedin/callback`
+        : (process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}/api/auth/linkedin/callback`
+            : 'http://localhost:5000/api/auth/linkedin/callback'),
       scope: ['openid', 'profile', 'email'],
     },
     async (accessToken: string, refreshToken: string, profile: any, done: any) => {

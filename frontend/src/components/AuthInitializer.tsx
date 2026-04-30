@@ -39,10 +39,12 @@ export const AuthInitializer = () => {
           navigate('/dashboard', { replace: true });
           toast.success('Signed in successfully!');
 
-        } catch (error) {
+        } catch (error: any) {
           console.error('Failed to fetch user with Google token', error);
           localStorage.removeItem('accessToken');
-          toast.error('Authentication failed');
+          if (!error.isSilentRefreshError) {
+            toast.error('Authentication failed');
+          }
         }
       };
 

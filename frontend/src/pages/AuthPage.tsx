@@ -147,7 +147,7 @@ const AuthPage = () => {
       // Smart switching logic: If user tries to login but no account exists, switch to signup
       if (errorData?.error === 'USER_NOT_FOUND' && !isSignUp) {
         setIsSignUp(true);
-        toast.error(errorData.message || 'No account found. Switching to Sign Up...', { id: toastId });
+        toast.error('Account does not exist', { id: toastId });
         return;
       }
 
@@ -156,7 +156,19 @@ const AuthPage = () => {
         toast.dismiss(toastId);
         return;
       }
-      const message = errorData?.message || 'Authentication failed';
+
+      if (err.isSilentRefreshError || errorData?.message === 'No refresh token') {
+        toast.dismiss(toastId);
+        return;
+      }
+
+      let message = errorData?.message || 'Authentication failed';
+      if (errorData?.error === 'USER_NOT_FOUND') {
+        message = 'Account does not exist';
+      } else if (err.response?.status === 401 || errorData?.error === 'INVALID_CREDENTIALS') {
+        message = 'Invalid email or password';
+      }
+
       setError(message);
       toast.error(message, { id: toastId });
     } finally {

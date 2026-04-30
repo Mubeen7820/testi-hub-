@@ -35,8 +35,11 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    const url = originalRequest.url || '';
+    const isAuthEndpoint = url.includes('login') || url.includes('register') || url.includes('refresh') || url.includes('set-password');
+
     // If 401 and not already retrying (Standard Token Refresh)
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
       originalRequest._retry = true;
 
       try {
@@ -51,11 +54,12 @@ api.interceptors.response.use(
           originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
           return api(originalRequest);
         }
-      } catch (refreshError) {
+      } catch (refreshError: any) {
         // If refresh fails, log out
         localStorage.removeItem('accessToken');
         localStorage.removeItem('user');
         window.location.href = '/login';
+        refreshError.isSilentRefreshError = true;
         return Promise.reject(refreshError);
       }
     }
